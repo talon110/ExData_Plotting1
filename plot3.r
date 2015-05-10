@@ -11,8 +11,15 @@ plot3 <- function(path = "./household_power_consumption.txt") {
         transform(., Date = strptime(paste(Date, Time, sep = " "), "%d/%m/%Y %H:%M:%S")) %>%
         select(., -(Time))
     
-    #png(filename = "plot3.png", width = 480, height = 480, units = "px")
-    plot(data$Date, data$Global_active_power, type = "l", xlab = "",
-         ylab = "Global Active Power (kilowatts)")
-    #dev.off()
+    png(filename = "plot3.png", width = 480, height = 480, units = "px")
+    with(data, {
+        plot(Date, Sub_metering_1, col = "black", type = "l", ylab = "Engergy sub metering", 
+             xlab = "")
+        lines(Date, Sub_metering_2, col = "red", type = "l")
+        lines(Date, Sub_metering_3, col = "blue", type = "l")
+        })
+    legend("topright", col = c("black", "red", "blue"), lty = "solid", 
+           legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
+    
+    dev.off()
 }
